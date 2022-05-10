@@ -5,15 +5,16 @@ import pickle
 import firebase_admin
 from firebase_admin import credentials,storage
 from firebase_admin import firestore
+from datetime import datetime
 
 cred = credentials.Certificate("key.json")
 firebase_admin.initialize_app(cred,{'storageBucket':'icamera-4d0e0.appspot.com'})
 
-
 bucket = storage.bucket()
 
-
 start_time=time.time()
+a1=0
+a2=1
 
 
 
@@ -33,7 +34,7 @@ while(True):
     ret,frame=cap.read()
     gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     faces=face_cascade.detectMultiScale(gray,1.05,5)
-    ct=int(time.time()-start_time)
+    ti=int(time.time()-start_time)
 
     for (x, y, w, h) in faces:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -58,13 +59,15 @@ while(True):
             cv2.putText(frame, name, (x, y), font, 1, color, stoke, cv2.LINE_AA)
             path_unknown='detectedface'
             cv2.imwrite(os.path.join(path_unknown,'faces.jpg'), frame)
-            # blob = bucket.blob('faces.jpg')
-            # blob.upload_from_filename('detectedface/faces.jpg')
-            # db = firestore.client()
-            # data = {blob.public_url : time.time()}
-            # db.collection('links').add(data)
-
-
+            if(a2>a1):
+                a2=a2+1
+                blob = bucket.blob('images'+str(ti))
+                blob.upload_from_filename('detectedface/faces.jpg')
+                blob.make_public()
+                db = firestore.client()
+                data={'link': blob.public_url, 'time': datetime.now()}
+                db.collection('links').add(data)
+            a1=ti
 
     cv2.imshow('video',frame)
     if cv2.waitKey(20) & 0xFF ==ord('q'):

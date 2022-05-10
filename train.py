@@ -50,3 +50,4 @@ with open("labels.pickle",'wb') as f:
 
 recognizer.train(x_labels,np.array(y_labels))
 recognizer.save("trainner.yml")
+

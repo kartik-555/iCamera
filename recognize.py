@@ -36,7 +36,8 @@ while(ti<20):
 
     cv2.imshow('video', frame)
     if cv2.waitKey(20) & 0xFF ==ord('q'):
-        break
+        breakv
+
 
 cap.release()
 cv2.destroyAllWindows()
