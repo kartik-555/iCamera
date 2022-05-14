@@ -25,11 +25,7 @@ for root,dirs,files in os.walk(image_dir):
             if  not label in label_ids:
                 label_ids[label]=current_id
                 current_id+=1
-                # print (current_id)
             id_=label_ids[label]
-            # print(label_ids)
-            # y_labels.append(label)
-            # x_labels.append(path)
 
             pil_image=Image.open(path).convert("L")
             image_array=np.array(pil_image,"uint8")

@@ -6,6 +6,7 @@ import firebase_admin
 from firebase_admin import credentials,storage
 from firebase_admin import firestore
 from datetime import datetime
+now=datetime.now()
 
 cred = credentials.Certificate("key.json")
 firebase_admin.initialize_app(cred,{'storageBucket':'icamera-4d0e0.appspot.com'})
@@ -59,15 +60,15 @@ while(True):
             cv2.putText(frame, name, (x, y), font, 1, color, stoke, cv2.LINE_AA)
             path_unknown='detectedface'
             cv2.imwrite(os.path.join(path_unknown,'faces.jpg'), frame)
-            if(a2>a1):
-                a2=a2+1
+            if(ti%5==0):
+                # a2=a2+1
                 blob = bucket.blob('images'+str(ti))
                 blob.upload_from_filename('detectedface/faces.jpg')
                 blob.make_public()
                 db = firestore.client()
-                data={'link': blob.public_url, 'time': datetime.now()}
+                data={'id':'pc1','link': blob.public_url, 'time': now.strftime("%d/%m/%Y %H:%M:%S")}
                 db.collection('links').add(data)
-            a1=ti
+            # a1=ti
 
     cv2.imshow('video',frame)
     if cv2.waitKey(20) & 0xFF ==ord('q'):
