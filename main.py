@@ -66,8 +66,10 @@ while(True):
                 blob.upload_from_filename('detectedface/faces.jpg')
                 blob.make_public()
                 db = firestore.client()
-                data={'id':'pc1','link': blob.public_url, 'time': now.strftime("%d/%m/%Y %H:%M:%S")}
+                data={'id':'pc3','link': blob.public_url, 'time': now.strftime("%d/%m/%Y %H:%M:%S")}
                 db.collection('links').add(data)
+
+
             # a1=ti
 
     cv2.imshow('video',frame)
