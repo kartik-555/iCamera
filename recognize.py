@@ -17,7 +17,7 @@ ti=0
 
 
 
-while(ti<20):
+while(ti<40):
     ret,frame=cap.read()
     gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     faces=face_cascade.detectMultiScale(gray,1.05,5)

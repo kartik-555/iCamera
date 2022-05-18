@@ -34,7 +34,7 @@ cap=cv2.VideoCapture(0)
 while(True):
     ret,frame=cap.read()
     gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-    faces=face_cascade.detectMultiScale(gray,1.05,5)
+    faces=face_cascade.detectMultiScale(gray,1.05,7)
     ti=int(time.time()-start_time)
 
     for (x, y, w, h) in faces:
@@ -68,6 +68,7 @@ while(True):
                 db = firestore.client()
                 data={'id':'pc3','link': blob.public_url, 'time': now.strftime("%d/%m/%Y %H:%M:%S")}
                 db.collection('links').add(data)
+
 
 
             # a1=ti
